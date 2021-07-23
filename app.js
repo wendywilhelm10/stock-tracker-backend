@@ -15,12 +15,12 @@ const morgan = require('morgan');
 
 const app = express();
 
-app.use(cors({
-    credentials: true,
-    preflightContinue: true,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    origin: false
-}));
+// app.use(cors({
+//     credentials: true,
+//     preflightContinue: true,
+//     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+//     origin: false
+// }));
 
 app.use(morgan('tiny'));
 app.use(authenticateJWT);
