@@ -15,6 +15,11 @@ const morgan = require('morgan');
 
 const app = express();
 
+app.use(cors());
+app.use(morgan('tiny'));
+app.use(authenticateJWT);
+app.use(express.json());
+
 // app.use(cors({
 //     credentials: true,
 //     preflightContinue: true,
@@ -22,8 +27,6 @@ const app = express();
 //     origin: false
 // }));
 
-app.use(morgan('tiny'));
-app.use(authenticateJWT);
 
 // app.use(function(req, res, next) {
 //     res.header('Access-Control-Allow-Origin', '*');
@@ -31,7 +34,7 @@ app.use(authenticateJWT);
 //     next();
 // });
 
-app.use(express.json());
+
 
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
