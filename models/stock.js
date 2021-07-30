@@ -1,7 +1,7 @@
 'use strict';
 
 const db = require('../db');
-const { UnauthorizedError } = require('../expressError');
+const { UnauthorizedError, BadRequestError } = require('../expressError');
 const { sqlForPartialUpdate } = require('../helpers/sql');
 
 class Stock {
@@ -23,6 +23,18 @@ class Stock {
 
         const id = result.rows[0].id;
         
+        const resStock = await db.query(
+            `SELECT ticker
+             FROM user_stocks
+             WHERE user_id = $1
+             AND ticker = $2`,
+            [id, stock]
+        )
+
+        if (resStock.rows[0]) {
+            throw new BadRequestError("User already following this stock")
+        }
+
         const res = await db.query(
             `INSERT INTO user_stocks
                 (user_id,
